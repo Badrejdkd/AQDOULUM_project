@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { CtaBand, PageHero, SectionHead } from "@/components/Blocks";
-import { IconHandshake, IconLeaf, IconScale, IconShield } from "@/components/Icons";
+import { IconCrane, IconHandshake, IconLeaf, IconPeople, IconScale, IconShield, IconTarget } from "@/components/Icons";
 import { getDict } from "@/lib/dict";
 import type { Lang } from "@/lib/i18n";
 import { pageMeta } from "@/lib/seo";
@@ -13,8 +13,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return pageMeta(lang, "/qualite-securite-conformite", q.metaTitle, q.metaDescription);
 }
 
-/* ⚠️ Certifications et indicateurs d'exemple (lib/dict.ts → quality) : n'affichez que ce que l'entreprise possède réellement. */
+/* ⚠️ Les indicateurs chiffrés (lib/dict.ts → quality.stats) sont des exemples : n'affichez que des chiffres réels. */
 const commitIcons = [IconShield, IconScale, IconHandshake, IconLeaf];
+const pillarIcons = [IconTarget, IconScale, IconCrane, IconPeople];
 
 export default async function QhsePage({ params }: Props) {
   const { lang } = await params;
@@ -53,16 +54,21 @@ export default async function QhsePage({ params }: Props) {
       <section className="section section--dark">
         <div className="container">
           <SectionHead split eyebrow={q.smsEyebrow} title={q.smsTitle} intro={q.smsIntro} />
-          <div className="grid-3">
-            {q.certs.map((c) => (
-              <article className="cert" key={c.title}>
-                <div className="cert__badge">
-                  <span>{c.code}</span>
-                </div>
-                <h3>{c.title}</h3>
-                <p>{c.text}</p>
-              </article>
-            ))}
+          <div className="grid-4">
+            {q.pillars.map((c, i) => {
+              const Icon = pillarIcons[i]!;
+              return (
+                <article className="cert" key={c.title}>
+                  <div className="cert__badge">
+                    <span>
+                      <Icon width={30} height={30} style={{ color: "var(--teal)" }} />
+                    </span>
+                  </div>
+                  <h3>{c.title}</h3>
+                  <p>{c.text}</p>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>

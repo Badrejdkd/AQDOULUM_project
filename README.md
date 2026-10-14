@@ -57,7 +57,7 @@ Pour la recevoir par e-mail, créez un compte gratuit sur https://resend.com, v�
 
 Pour modifier un texte, changez-le **dans les deux langues** dans `lib/dict.ts`.
 
-⚠️ La page Qualité & sécurité contient encore des certifications ISO et des indicateurs d'exemple, et le portfolio contient des projets d'exemple après les 4 projets réels : à adapter avant la mise en ligne.
+⚠️ La page Qualité & sécurité contient encore des indicateurs chiffrés d'exemple (lib/dict.ts → quality.stats) : à adapter avant la mise en ligne.
 
 **Photos de projets** : déposez-les dans `public/projets/` puis renseignez `image` et `gallery` du projet dans `lib/projects.ts`.
 

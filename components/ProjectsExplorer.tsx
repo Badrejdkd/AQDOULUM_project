@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { countryLabels, projects, projectCountries, projectTypes, sortProjects, typeLabels } from "@/lib/projects";
+import { countryLabels, projects, projectCountries, sortProjects, typeLabels, usedProjectTypes } from "@/lib/projects";
 import { getDict } from "@/lib/dict";
 import type { Lang } from "@/lib/i18n";
 import ProjectCard from "./ProjectCard";
@@ -47,7 +47,7 @@ export default function ProjectsExplorer({ lang }: { lang: Lang }) {
             {d.type}
           </span>
           <div className="chips" aria-labelledby="f-type">
-            {[ALL, ...projectTypes].map((t) => (
+            {[ALL, ...usedProjectTypes].map((t) => (
               <button key={t} type="button" className="chip" aria-pressed={type === t} onClick={() => setFilter("type", t)}>
                 {t === ALL ? d.all : typeLabels[t as keyof typeof typeLabels][lang]}
                 {t !== ALL && <span className="chip__count">{countFor("type", t)}</span>}
@@ -55,19 +55,21 @@ export default function ProjectsExplorer({ lang }: { lang: Lang }) {
             ))}
           </div>
         </div>
-        <div className="filter-group">
-          <span className="filter-group__label" id="f-country">
-            {d.country}
-          </span>
-          <div className="chips" aria-labelledby="f-country">
-            {[ALL, ...countries].map((c) => (
-              <button key={c} type="button" className="chip" aria-pressed={country === c} onClick={() => setFilter("country", c)}>
-                {c === ALL ? d.all : countryLabels[c]![lang]}
-                {c !== ALL && <span className="chip__count">{countFor("country", c)}</span>}
-              </button>
-            ))}
+        {countries.length > 1 && (
+          <div className="filter-group">
+            <span className="filter-group__label" id="f-country">
+              {d.country}
+            </span>
+            <div className="chips" aria-labelledby="f-country">
+              {[ALL, ...countries].map((c) => (
+                <button key={c} type="button" className="chip" aria-pressed={country === c} onClick={() => setFilter("country", c)}>
+                  {c === ALL ? d.all : countryLabels[c]![lang]}
+                  {c !== ALL && <span className="chip__count">{countFor("country", c)}</span>}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="results-bar" aria-live="polite">
